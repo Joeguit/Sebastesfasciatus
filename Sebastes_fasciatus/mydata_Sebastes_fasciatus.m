@@ -50,6 +50,16 @@ data.Li = 50; units.Li = 'cm'; label.Li = 'ultimate length'; bibkey.Li = {'Gasc2
 data.Ri = 293; units.Ri = '#/d'; label.Ri = 'ultimate reproduction rate'; bibkey.Ri = {'Gasc2003'};
   temp.Ri = C2K(6); units.temp.Ri = 'K'; label.temp.Ri = 'temperature';
   comment.Ri = 'per year';
+  
+% uni-variate data
+cd ../
+
+data.LW80 = readmatrix('L-Ww_MPO_LxM_1980.csv');
+data.LW80(:,1) = data.LW80(:,1)/ 10; % convert mm to cm
+units.LW80 = {'cm', 'g'};     label.LW80 = {'fork length', 'wet weight'};  bibkey.LW80 = {'Sena2021'};
+
+cd Sebastes_fasciatus
+
 
 %% set weights for all real data
 weights = setweights(data, []);

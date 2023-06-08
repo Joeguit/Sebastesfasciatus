@@ -19,8 +19,6 @@ if info == 0
   prdData = []; return;
 end
 
-% initial
-Lw_h = aUL(end,3)/ del_M; % cm, physical length at hatch
 
 % hatch
 pars_UE0 = [V_Hb; g; k_J; k_M; v]; % compose parameter vector
@@ -74,5 +72,11 @@ prdData.Lpm = Lw_pm;
 prdData.Li = Lw_i;
 prdData.Ri = R_i;
 
+% uni-varate data
+
+EW80 = (LW80(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
+
+
 % pack to output
+prdData.LW80 = EW80;
 
