@@ -74,7 +74,7 @@ temp.tW10 = C2K(10); units.temp.tW10 = 'K'; label.temp.tW10 = 'temperature';
 
 data.WJO10 = readmatrix('Ww_JO_10.0_Weight-MMR_10.0.csv');
 data.WJO10 = [data.WJO10(:,1), data.WJO10(:,2)]; % d, mol/d
-units.WJO10 = {'d', 'mol/d'}; label.WJO10 = {'time', 'oxygen'};  bibkey.WJO10 = {'Sena2021'};
+units.WJO10 = {'d', 'mg/h'}; label.WJO10 = {'time', 'oxygen'};  bibkey.WJO10 = {'Sena2021'};
 temp.WJO10 = C2K(10); units.temp.WJO10 = 'K'; label.temp.WJO10 = 'temperature';
 
 

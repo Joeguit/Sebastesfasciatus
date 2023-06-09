@@ -91,13 +91,13 @@ prdData.Ri = R_i;
   ELw10 = L/ del_M; % cm, physical length
   EWw10 = L.^3 * (1 + ome * f);
   
-  L = (WJO10(:,1)./ (1 + ome * f)).^(1/3);
-  [Lsort, ai, ci] = unique(L);
+  L = (WJO10(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
   pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
   p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
   pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
   J_M = - TC_10 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O10 = - J_M(3,ci)';            % mol/d O2 consumption 
+  EJT_O10 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
 
   
 
