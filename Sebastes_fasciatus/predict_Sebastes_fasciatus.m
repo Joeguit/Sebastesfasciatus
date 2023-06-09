@@ -81,6 +81,8 @@ prdData.Ri = R_i;
 
  EW80 = (LW80(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
 
+ 
+ f = f10; 
  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
   rT_B = rho_B * TC_10 * k_M;  % 1/d, von Bert growth rate
   L_i  = l_i * L_m;
