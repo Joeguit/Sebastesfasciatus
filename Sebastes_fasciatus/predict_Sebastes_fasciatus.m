@@ -10,6 +10,11 @@ pars_T = T_A;
 TC_ab = tempcorr(temp.ab, T_ref, pars_T);
 TC_am = tempcorr(temp.am, T_ref, pars_T);
 TC_Ri = tempcorr(temp.Ri, T_ref, pars_T);
+TC_10 = tempcorr(temp.WJO10, T_ref, pars_T);
+% TC_7 = tempcorr(temp.WJO7, T_ref, pars_T);
+% TC_5 = tempcorr(temp.WJO5, T_ref, pars_T);
+% TC_2 = tempcorr(temp.WJO2, T_ref, pars_T);
+
 
 % life cycle
 pars_tj = [g; k; l_T; v_Hb; v_Hj; v_Hp];
@@ -51,7 +56,7 @@ p_Am_m = z_m * p_M/ kap; % J/d.cm^2, {p_Am} spec assimilation flux
 E_m_m = p_Am_m/ v; % J/cm^3, reserve capacity [E_m]
 g_m = E_G/ (kap* E_m_m); % -, energy investment ratio
 m_Em_m = y_E_V * E_m_m/ E_G; % mol/mol, reserve capacity
-ome_m = m_Em_m * w_E/ w_V; % -, contribution of reserve to weight
+% ome_m = m_Em_m * w_E/ w_V; % -, contribution of reserve to weight
 if ~exist('v_Hpm','var'); v_Hpm = v_Hp; end; pars_tjm = [g_m k l_T v_Hb v_Hj v_Hpm];
 [tau_jm, tau_pm, tau_bm, l_jm, l_pm, l_bm, l_im, rho_jm, rho_Bm] = get_tj(pars_tjm, f);
 L_mm = v/ k_M/ g_m; % cm, max structural length
@@ -74,9 +79,28 @@ prdData.Ri = R_i;
 
 % uni-varate data
 
-EW80 = (LW80(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
+ EW80 = (LW80(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
 
+ [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
+  rT_B = rho_B * TC_10 * k_M;  % 1/d, von Bert growth rate
+  L_i  = l_i * L_m;
+  L0 = Lwstart.tL10 * del_M; % cm, intitial structural length  
+  L = L_i - (L_i - L0) .* exp( - rT_B .* tL10(:,1)); 
+  ELw10 = L/ del_M; % cm, physical length
+  EWw10 = L.^3 * (1 + ome * f);
+  
+  L = (WJO10(:,1)./ (1 + ome * f)).^(1/3);
+  [Lsort, ai, ci] = unique(L);
+  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
+  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
+  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
+  J_M = - TC_10 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
+  EJT_O10 = - J_M(3,ci)';            % mol/d O2 consumption 
+
+  
 
 % pack to output
 prdData.LW80 = EW80;
-
+prdData.tL10 = ELw10; 
+prdData.tW10 = EWw10; 
+prdData.WJO10 = EJT_O10; 

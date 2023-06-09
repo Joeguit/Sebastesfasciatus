@@ -56,7 +56,27 @@ cd ../
 
 data.LW80 = readmatrix('L-Ww_MPO_LxM_1980.csv');
 data.LW80(:,1) = data.LW80(:,1)/ 10; % convert mm to cm
+data.LW80 = [data.LW80(:,1),data.LW80(:,2)] ; % convert mm to cm
 units.LW80 = {'cm', 'g'};     label.LW80 = {'fork length', 'wet weight'};  bibkey.LW80 = {'Sena2021'};
+
+data.tL10 = readmatrix('t-L_10.0_pivotlength10.0.csv');
+data.tL10 = [data.tL10(:,1), data.tL10(:,2)/10]; % d, mm to cm
+units.tL10 = {'d', 'cm'}; label.tL10 = {'time', 'length'};  bibkey.tL10 = {'Sena2021'};
+temp.tL10 = C2K(10); units.temp.tL10 = 'K'; label.temp.tL10 = 'temperature';
+Lwstart.tL10 =  data.tL10(1,2); units.Lwstart.tL10 = 'cm'; label.Lwstart.tL10 = 'initial length';
+
+data.tW10 = readmatrix('t_Ww_10.0_pivotweights10.0.csv');
+data.tW10 = [data.tW10(:,1), data.tW10(:,2)]; % d, g
+units.tW10 = {'d', 'g'}; label.tW10 = {'time', 'wet weight'};  bibkey.tW10 = {'Sena2021'};
+temp.tW10 = C2K(10); units.temp.tW10 = 'K'; label.temp.tW10 = 'temperature';
+
+
+
+data.WJO10 = readmatrix('Ww_JO_10.0_Weight-MMR_10.0.csv');
+data.WJO10 = [data.WJO10(:,1), data.WJO10(:,2)]; % d, mol/d
+units.WJO10 = {'d', 'mol/d'}; label.WJO10 = {'time', 'oxygen'};  bibkey.WJO10 = {'Sena2021'};
+temp.WJO10 = C2K(10); units.temp.WJO10 = 'K'; label.temp.WJO10 = 'temperature';
+
 
 cd Sebastes_fasciatus
 
@@ -69,10 +89,23 @@ weights = setweights(data, []);
 
 %% pack auxData and txtData for output
 auxData.temp = temp;
+auxData.Lwstart = Lwstart;
+% auxData.treat = treat;
 txtData.units = units;
 txtData.label = label;
 txtData.bibkey = bibkey;
 txtData.comment = comment;
+
+%% Group plots
+% set1 = {'WJO10', 'WJO7', 'WwJO5','WwJO2'}; subtitle1 = {'resting metabolic rate at 10, 7.5, 5.0 and 2.5 C'};      
+% metaData.grp.sets = {set1};
+% metaData.grp.subtitle = {subtitle1};
+
+%% Discussion points
+D1 = 'Males are assumed to differ from females by {p_Am} only';
+metaData.discussion = struct('D1', D1);
+
+
 
 %% Links
 metaData.links.id_CoL = '4W7M3'; % Cat of Life
