@@ -59,6 +59,11 @@ data.LW80(:,1) = data.LW80(:,1)/ 10; % convert mm to cm
 data.LW80 = [data.LW80(:,1),data.LW80(:,2)] ; % convert mm to cm
 units.LW80 = {'cm', 'g'};     label.LW80 = {'fork length', 'wet weight'};  bibkey.LW80 = {'Sena2021'};
 
+data.LW15 = readmatrix('L-Ww_MPO_LxM_2015+.csv');
+data.LW15(:,1) = data.LW15(:,1)/ 10; % convert mm to cm
+data.LW15 = [data.LW15(:,1),data.LW15(:,2)] ; % convert mm to cm
+units.LW15 = {'cm', 'g'};     label.LW15 = {'fork length', 'wet weight'};  bibkey.LW15 = {'Sena2021'};
+
 data.tL10 = readmatrix('t-L_10.0_pivotlength10.0.csv');
 data.tL10 = [data.tL10(:,1), data.tL10(:,2)/10]; % d, mm to cm
 units.tL10 = {'d', 'cm'}; label.tL10 = {'time', 'length'};  bibkey.tL10 = {'Sena2021'};
@@ -70,13 +75,82 @@ data.tW10 = [data.tW10(:,1), data.tW10(:,2)]; % d, g
 units.tW10 = {'d', 'g'}; label.tW10 = {'time', 'wet weight'};  bibkey.tW10 = {'Sena2021'};
 temp.tW10 = C2K(10); units.temp.tW10 = 'K'; label.temp.tW10 = 'temperature';
 
-
-
-data.WJO10 = readmatrix('Ww_JO_10.0_Weight-MMR_10.0.csv');
+data.WJO10 = readmatrix('Ww_JO_10.0_Weight-SMR_10.0.csv');
 data.WJO10 = [data.WJO10(:,1), data.WJO10(:,2)]; % d, mol/d
 units.WJO10 = {'d', 'mg/h'}; label.WJO10 = {'time', 'oxygen'};  bibkey.WJO10 = {'Sena2021'};
 temp.WJO10 = C2K(10); units.temp.WJO10 = 'K'; label.temp.WJO10 = 'temperature';
 
+data.WJmO10 = readmatrix('Ww_JO_10.0_Weight-MMR_10.0.csv');
+data.WJmO10 = [data.WJmO10(:,1), data.WJmO10(:,2)]; % d, mol/d
+units.WJmO10 = {'d', 'mg/h'}; label.WJmO10 = {'time', 'oxygen'};  bibkey.WJmO10 = {'Sena2021'};
+temp.WJmO10 = C2K(10); units.temp.WJmO10 = 'K'; label.temp.WJmO10 = 'temperature';
+%%%Uni-variate for 2
+data.tL2 = readmatrix('t-L_2.5_pivotlength2.5.csv');
+data.tL2 = [data.tL2(:,1), data.tL2(:,2)/10]; % d, mm to cm
+units.tL2 = {'d', 'cm'}; label.tL2 = {'time', 'length'};  bibkey.tL2 = {'Sena2021'};
+temp.tL2 = C2K(2.5); units.temp.tL2 = 'K'; label.temp.tL2 = 'temperature';
+Lwstart.tL2 =  data.tL2(1,2); units.Lwstart.tL2 = 'cm'; label.Lwstart.tL2 = 'initial length';
+
+data.tW2 = readmatrix('t-Ww_2.5_pivotweights2.5.csv');
+data.tW2 = [data.tW2(:,1), data.tW2(:,2)]; % d, g
+units.tW2 = {'d', 'g'}; label.tW2 = {'time', 'wet weight'};  bibkey.tW2 = {'Sena2021'};
+temp.tW2 = C2K(2.5); units.temp.tW2 = 'K'; label.temp.tW2 = 'temperature';
+
+data.WJO2 = readmatrix('Ww_JO_2.5_Weight-SMR_2.5.csv');
+data.WJO2 = [data.WJO2(:,1), data.WJO2(:,2)]; % d, mol/d
+units.WJO2 = {'d', 'mg/h'}; label.WJO2 = {'time', 'oxygen'};  bibkey.WJO2 = {'Sena2021'};
+temp.WJO2 = C2K(2.5); units.temp.WJO2 = 'K'; label.temp.WJO2 = 'temperature';
+
+data.WJmO2 = readmatrix('Ww_JO_2.5_Weight-MMR_2.5.csv');
+data.WJmO2 = [data.WJmO2(:,1), data.WJmO2(:,2)]; % d, mol/d
+units.WJmO2 = {'d', 'mg/h'}; label.WJmO2 = {'time', 'oxygen'};  bibkey.WJmO2 = {'Sena2021'};
+temp.WJmO2 = C2K(2.5); units.temp.WJmO2 = 'K'; label.temp.WJmO2 = 'temperature';
+
+%%%Uni-variate for 7
+data.tL7 = readmatrix('t-L_7.5_pivotlength7.5.csv');
+data.tL7 = [data.tL7(:,1), data.tL7(:,2)/10]; % d, mm to cm
+units.tL7 = {'d', 'cm'}; label.tL7 = {'time', 'length'};  bibkey.tL7 = {'Sena2021'};
+temp.tL7 = C2K(7.5); units.temp.tL7 = 'K'; label.temp.tL7 = 'temperature';
+Lwstart.tL7 =  data.tL7(1,2); units.Lwstart.tL7 = 'cm'; label.Lwstart.tL7 = 'initial length';
+
+data.tW7 = readmatrix('t-Ww_7.5_pivotweights7.5.csv');
+data.tW7 = [data.tW7(:,1), data.tW7(:,2)]; % d, g
+units.tW7 = {'d', 'g'}; label.tW7 = {'time', 'wet weight'};  bibkey.tW7 = {'Sena2021'};
+temp.tW7 = C2K(7.5); units.temp.tW7 = 'K'; label.temp.tW7 = 'temperature';
+
+data.WJO7 = readmatrix('Ww_JO_7.5_Weight-SMR_7.5.csv');
+data.WJO7 = [data.WJO7(:,1), data.WJO7(:,2)]; % d, mol/d
+units.WJO7 = {'d', 'mg/h'}; label.WJO7 = {'time', 'oxygen'};  bibkey.WJO7 = {'Sena2021'};
+temp.WJO7 = C2K(7.5); units.temp.WJO7 = 'K'; label.temp.WJO7 = 'temperature';
+
+data.WJmO7 = readmatrix('Ww_JO_7.5_Weight-MMR_7.5.csv');
+data.WJmO7 = [data.WJmO7(:,1), data.WJmO7(:,2)]; % d, mol/d
+units.WJmO7 = {'d', 'mg/h'}; label.WJmO7 = {'time', 'oxygen'};  bibkey.WJmO7 = {'Sena2021'};
+temp.WJmO7 = C2K(7.5); units.temp.WJmO7 = 'K'; label.temp.WJmO7 = 'temperature';
+
+
+
+%%%Uni-variate for 5
+data.tL5 = readmatrix('t-L_5.0_pivotlength5.0.csv');
+data.tL5 = [data.tL5(:,1), data.tL5(:,2)/10]; % d, mm to cm
+units.tL5 = {'d', 'cm'}; label.tL5 = {'time', 'length'};  bibkey.tL5 = {'Sena2021'};
+temp.tL5 = C2K(5); units.temp.tL5 = 'K'; label.temp.tL5 = 'temperature';
+Lwstart.tL5 =  data.tL5(1,2); units.Lwstart.tL5 = 'cm'; label.Lwstart.tL5 = 'initial length';
+
+data.tW5 = readmatrix('t_Ww_5.0_pivotweights5.0.csv');
+data.tW5 = [data.tW5(:,1), data.tW5(:,2)]; % d, g
+units.tW5 = {'d', 'g'}; label.tW5 = {'time', 'wet weight'};  bibkey.tW5 = {'Sena2021'};
+temp.tW5 = C2K(5); units.temp.tW5 = 'K'; label.temp.tW5 = 'temperature';
+
+data.WJO5 = readmatrix('Ww_JO_5.0_Weight-SMR_5.0.csv');
+data.WJO5 = [data.WJO5(:,1), data.WJO5(:,2)]; % d, mol/d
+units.WJO5 = {'d', 'mg/h'}; label.WJO5 = {'time', 'oxygen'};  bibkey.WJO5 = {'Sena2021'};
+temp.WJO5 = C2K(5); units.temp.WJO5 = 'K'; label.temp.WJO5 = 'temperature';
+
+data.WJmO5 = readmatrix('Ww_JO_5.0_Weight-MMR_5.0.csv');
+data.WJmO5 = [data.WJmO5(:,1), data.WJmO5(:,2)]; % d, mol/d
+units.WJmO5 = {'d', 'mg/h'}; label.WJmO5 = {'time', 'oxygen'};  bibkey.WJmO5 = {'Sena2021'};
+temp.WJmO5 = C2K(5); units.temp.WJmO5 = 'K'; label.temp.WJmO5 = 'temperature';
 
 cd Sebastes_fasciatus
 
@@ -97,10 +171,12 @@ txtData.bibkey = bibkey;
 txtData.comment = comment;
 
 %% Group plots
-% set1 = {'WJO10', 'WJO7', 'WwJO5','WwJO2'}; subtitle1 = {'resting metabolic rate at 10, 7.5, 5.0 and 2.5 C'};      
-% metaData.grp.sets = {set1};
-% metaData.grp.subtitle = {subtitle1};
-
+ set1 = {'WJO10', 'WJO7', 'WJO5','WJO2'}; subtitle1 = {'Standard metabolic rate at 10, 7.5, 5.0 and 2.5 C'};      
+ metaData.grp.sets = {set1};
+ metaData.grp.subtitle = {subtitle1};
+ set2 = {'WJmO10', 'WJmO7', 'WJmO5','WJmO2'}; subtitle2 = {'Maximal metabolic rate at 10, 7.5, 5.0 and 2.5 C'};      
+ metaData.grp.sets = {set2};
+ metaData.grp.subtitle = {subtitle2};
 %% Discussion points
 D1 = 'Males are assumed to differ from females by {p_Am} only';
 metaData.discussion = struct('D1', D1);
