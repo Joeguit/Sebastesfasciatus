@@ -60,8 +60,8 @@ m_Em_m = y_E_V * E_m_m/ E_G; % mol/mol, reserve capacity
 if ~exist('v_Hpm','var'); v_Hpm = v_Hp; end; pars_tjm = [g_m k l_T v_Hb v_Hj v_Hpm];
 [tau_jm, tau_pm, tau_bm, l_jm, l_pm, l_bm, l_im, rho_jm, rho_Bm] = get_tj(pars_tjm, f);
 L_mm = v/ k_M/ g_m; % cm, max structural length
-L_im = l_im * L_mm;  % cm, ultimate structural length
-Lw_im = L_im/ del_M; % cm, ultimate physical length
+% L_im = l_im * L_mm;  % cm, ultimate structural length
+% Lw_im = L_im/ del_M; % cm, ultimate physical length
 pars_tpm = [g_m k l_T v_Hb v_Hpm]; % pars for males
 [tau_pm, tau_bm, l_pm] = get_tp(pars_tpm, f); % - , scaled time, length
 L_pm = L_mm * l_pm; % cm, structural length at puberty
@@ -83,7 +83,7 @@ EW80 = (LW80(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
 EW15 = (LW15(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
 
  
-% f = f10; 
+  f = f10; 
  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
   rT_B = rho_B * TC_10 * k_M;  % 1/d, von Bert growth rate
   L_i  = l_i * L_m;
@@ -92,72 +92,25 @@ EW15 = (LW15(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
   ELw10 = L/ del_M; % cm, physical length
   EWw10 = L.^3 * (1 + ome * f);
   
+  % SMR 
   L = (WJO10(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
   [Lsort, ai, ci] = unique(L); % sorting and getting unique values
   pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
   p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
   pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
-  J_M = - TC_10 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
+  pADG = pACSJGRD(:, [1 7 5]); pADG(:,1) = 0; % exclude assim contribution
+  J_M = - TC_10 * (n_M\n_O) * eta_O * pADG';  % mol/d: J_C, J_H, J_O, J_N in rows
   EJT_O10 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
-
-    L = (WJmO10(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  % MMR
+  L = (WJmO10(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
   [Lsort, ai, ci] = unique(L); % sorting and getting unique values
   pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
   p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
   pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
   J_M = - TC_10 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O10 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
+  EJmT_O10 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
  
-  f = f5; 
- [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
-  rT_B = rho_B * TC_5 * k_M;  % 1/d, von Bert growth rate
-  L_i  = l_i * L_m;
-  L0 = Lwstart.tL5 * del_M; % cm, intitial structural length  
-  L = L_i - (L_i - L0) .* exp( - rT_B .* tL5(:,1)); 
-  ELw5 = L/ del_M; % cm, physical length
-  EWw5 = L.^3 * (1 + ome * f);
-  
-  L = (WJO5(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
-  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
-  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
-  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
-  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
-  J_M = - TC_5 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O5 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
-
-  L = (WJmO5(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
-  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
-  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
-  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
-  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
-  J_M = - TC_5 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O5 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
-% f = f2; 
- [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
-  rT_B = rho_B * TC_2 * k_M;  % 1/d, von Bert growth rate
-  L_i  = l_i * L_m;
-  L0 = Lwstart.tL2 * del_M; % cm, intitial structural length  
-  L = L_i - (L_i - L0) .* exp( - rT_B .* tL2(:,1)); 
-  ELw2 = L/ del_M; % cm, physical length
-  EWw2 = L.^3 * (1 + ome * f);
-  
-  L = (WJO2(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
-  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
-  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
-  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
-  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
-  J_M = - TC_2 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O2 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
-
-   L = (WJmO2(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
-  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
-  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
-  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
-  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
-  J_M = - TC_2 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O2 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
-
-
+  %%
 % f = f7; 
  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
   rT_B = rho_B * TC_7 * k_M;  % 1/d, von Bert growth rate
@@ -166,22 +119,77 @@ EW15 = (LW15(:,1)* del_M).^3 * (1 + ome * f); % g, wet weight
   L = L_i - (L_i - L0) .* exp( - rT_B .* tL7(:,1)); 
   ELw7 = L/ del_M; % cm, physical length
   EWw7 = L.^3 * (1 + ome * f);
-  
+  % SMR
   L = (WJO7(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
   [Lsort, ai, ci] = unique(L); % sorting and getting unique values
   pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
   p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
   pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
-  J_M = - TC_7 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])'; %J_M(:,1)= 0 % mol/d: J_C, J_H, J_O, J_N in rows
+    pADG = pACSJGRD(:, [1 7 5]); pADG(:,1) = 0; % exclude assim contribution
+  J_M = - TC_7 * (n_M\n_O) * eta_O * pADG'; %J_M(:,1)= 0 % mol/d: J_C, J_H, J_O, J_N in rows
   EJT_O7 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
-
-L = (WJmO7(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  % MMR
+  L = (WJmO7(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
   [Lsort, ai, ci] = unique(L); % sorting and getting unique values
   pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
   p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
   pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
   J_M = - TC_7 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])'; %J_M(:,1)= 0 % mol/d: J_C, J_H, J_O, J_N in rows
-  EJT_O7 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption
+  EJmT_O7 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption
+ 
+  %%
+  %f = f5; 
+ [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
+  rT_B = rho_B * TC_5 * k_M;  % 1/d, von Bert growth rate
+  L_i  = l_i * L_m;
+  L0 = Lwstart.tL5 * del_M; % cm, intitial structural length  
+  L = L_i - (L_i - L0) .* exp( - rT_B .* tL5(:,1)); 
+  ELw5 = L/ del_M; % cm, physical length
+  EWw5 = L.^3 * (1 + ome * f);
+% SMR  
+  L = (WJO5(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
+  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
+  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
+  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
+  pADG = pACSJGRD(:, [1 7 5]); pADG(:,1) = 0; % exclude assim contribution
+  J_M = - TC_5 * (n_M\n_O) * eta_O * pADG';  % mol/d: J_C, J_H, J_O, J_N in rows
+  EJT_O5 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
+% MMR
+  L = (WJmO5(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
+  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
+  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
+  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
+  pADG = pACSJGRD(:, [1 7 5]); 
+  J_M = - TC_5 * (n_M\n_O) * eta_O * pADG';  % mol/d: J_C, J_H, J_O, J_N in rows
+  EJmT_O5 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
+
+%%
+  [tau_j, tau_p, tau_b, l_j, l_p, l_b, l_i, rho_j, rho_B, info] = get_tj(pars_tj, f);
+  rT_B = rho_B * TC_2 * k_M;  % 1/d, von Bert growth rate
+  L_i  = l_i * L_m;
+  L0 = Lwstart.tL2 * del_M; % cm, intitial structural length  
+  L = L_i - (L_i - L0) .* exp( - rT_B .* tL2(:,1)); 
+  ELw2 = L/ del_M; % cm, physical length
+  EWw2 = L.^3 * (1 + ome * f);
+  % SMR
+  L = (WJO2(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
+  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
+  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
+  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
+  pADG = pACSJGRD(:, [1 7 5]); pADG(:,1) = 0; % exclude assim contribution
+  J_M = - TC_2 * (n_M\n_O) * eta_O * pADG';  % mol/d: J_C, J_H, J_O, J_N in rows
+  EJT_O2 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
+% MMR
+   L = (WJmO2(:,1)./ (1 + ome * f)).^(1/3); % cm, struct length
+  [Lsort, ai, ci] = unique(L); % sorting and getting unique values
+  pars_p = [kap; kap_R; g; k_J; k_M; L_T; v; U_Hb; U_Hj; U_Hp]; % compose pars
+  p_ref = p_Am * L_m^2; % J/d, max assimilation power at max size
+  pACSJGRD = p_ref * scaled_power_j(Lsort, f, pars_p, l_b, l_j, l_p);  % J/d, powers
+  J_M = - TC_2 * (n_M\n_O) * eta_O * pACSJGRD(:, [1 7 5])';  % mol/d: J_C, J_H, J_O, J_N in rows
+  EJmT_O2 = - J_M(3,ci)' * 32 * 1e3/ 24;            % mg/h O2 consumption 
 
 % pack to output
 
@@ -190,21 +198,21 @@ prdData.LW15 = EW15;
 prdData.tL5 = ELw5; 
 prdData.tW5 = EWw5; 
 prdData.WJO5 = EJT_O5; 
-prdData.WJmO5 = EJT_O5;
+prdData.WJmO5 = EJmT_O5;
 
 prdData.tL2 = ELw2; 
 prdData.tW2 = EWw2; 
 prdData.WJO2 = EJT_O2;
-prdData.WJmO2 = EJT_O2;
+prdData.WJmO2 = EJmT_O2;
 
 prdData.tL7 = ELw7; 
 prdData.tW7 = EWw7; 
 prdData.WJO7 = EJT_O7; 
-prdData.WJmO7 = EJT_O7;
+prdData.WJmO7 = EJmT_O7;
 
 prdData.tL10 = ELw10; 
 prdData.tW10 = EWw10; 
 prdData.WJO10 = EJT_O10; 
-prdData.WJmO10 = EJT_O10;
+prdData.WJmO10 = EJmT_O10;
 
 
