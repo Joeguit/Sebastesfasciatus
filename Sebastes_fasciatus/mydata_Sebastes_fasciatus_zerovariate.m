@@ -159,8 +159,8 @@ cd Sebastes_fasciatus
 weights = setweights(data, []);
 weights.LW80 = 0.1 * weights.LW80;
 weights.LW15 = 0.1 * weights.LW15;
-weights.tW2 = 20 * weights.tW2;
-weights.tL2 = 10 * weights.tW2;
+weights.tW5 = 20 * weights.tW5;
+weights.tL5 = 10 * weights.tW5;
 
 
 %% set pseudodata and respective weights
