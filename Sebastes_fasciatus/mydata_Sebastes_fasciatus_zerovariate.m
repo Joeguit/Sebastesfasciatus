@@ -82,7 +82,7 @@ temp.WJO10 = C2K(10); units.temp.WJO10 = 'K'; label.temp.WJO10 = 'temperature';
 
 data.WJmO10 = readmatrix('Ww_JO_10.0_Weight-MMR_10.0.csv');
 data.WJmO10 = [data.WJmO10(:,1), data.WJmO10(:,2)]; % d, mol/d
-units.WJmO10 = {'g', 'mg/h'}; label.WJmO10 = {'wet weight', 'oxygen'};  bibkey.WJmO10 = {'Sena2021'};
+units.WJmO10 = {'g', 'mg/h'}; label.WJmO10 = {'wet weight', 'oxygen uptake'};  bibkey.WJmO10 = {'Sena2021'};
 temp.WJmO10 = C2K(10); units.temp.WJmO10 = 'K'; label.temp.WJmO10 = 'temperature';
 %%%Uni-variate for 2
 data.tL2 = readmatrix('t-L_2.5_pivotlength2.5.csv');
@@ -98,7 +98,7 @@ temp.tW2 = C2K(2.5); units.temp.tW2 = 'K'; label.temp.tW2 = 'temperature';
 
 data.WJO2 = readmatrix('Ww_JO_2.5_Weight-SMR_2.5.csv');
 data.WJO2 = [data.WJO2(:,1), data.WJO2(:,2)]; % d, mol/d
-units.WJO2 = {'g', 'mg/h'}; label.WJO2 = {'wet weight', 'oxygen'};  bibkey.WJO2 = {'Sena2021'};
+units.WJO2 = {'g', 'mg/h'}; label.WJO2 = {'wet weight', 'oxygen uptake'};  bibkey.WJO2 = {'Sena2021'};
 temp.WJO2 = C2K(2.5); units.temp.WJO2 = 'K'; label.temp.WJO2 = 'temperature';
 
 data.WJmO2 = readmatrix('Ww_JO_2.5_Weight-MMR_2.5.csv');
@@ -120,7 +120,7 @@ temp.tW7 = C2K(7.5); units.temp.tW7 = 'K'; label.temp.tW7 = 'temperature';
 
 data.WJO7 = readmatrix('Ww_JO_7.5_Weight-SMR_7.5.csv');
 data.WJO7 = [data.WJO7(:,1), data.WJO7(:,2)]; % d, mol/d
-units.WJO7 = {'g', 'mg/h'}; label.WJO7 = {'wet weight', 'oxygen'};  bibkey.WJO7 = {'Sena2021'};
+units.WJO7 = {'g', 'mg/h'}; label.WJO7 = {'wet weight', 'oxygen uptake'};  bibkey.WJO7 = {'Sena2021'};
 temp.WJO7 = C2K(7.5); units.temp.WJO7 = 'K'; label.temp.WJO7 = 'temperature';
 
 data.WJmO7 = readmatrix('Ww_JO_7.5_Weight-MMR_7.5.csv');
@@ -144,12 +144,12 @@ temp.tW5 = C2K(5); units.temp.tW5 = 'K'; label.temp.tW5 = 'temperature';
 
 data.WJO5 = readmatrix('Ww_JO_5.0_Weight-SMR_5.0.csv');
 data.WJO5 = [data.WJO5(:,1), data.WJO5(:,2)]; % d, mol/d
-units.WJO5 = {'g', 'mg/h'}; label.WJO5 = {'wet weight', 'oxygen'};  bibkey.WJO5 = {'Sena2021'};
+units.WJO5 = {'g', 'mg/h'}; label.WJO5 = {'wet weight', 'oxygen uptake'};  bibkey.WJO5 = {'Sena2021'};
 temp.WJO5 = C2K(5); units.temp.WJO5 = 'K'; label.temp.WJO5 = 'temperature';
 
 data.WJmO5 = readmatrix('Ww_JO_5.0_Weight-MMR_5.0.csv');
 data.WJmO5 = [data.WJmO5(:,1), data.WJmO5(:,2)]; % d, mol/d
-units.WJmO5 = {'g', 'mg/h'}; label.WJmO5 = {'wet weight', 'oxygen'};  bibkey.WJmO5 = {'Sena2021'};
+units.WJmO5 = {'g', 'mg/h'}; label.WJmO5 = {'wet weight', 'oxygen uptake'};  bibkey.WJmO5 = {'Sena2021'};
 temp.WJmO5 = C2K(5); units.temp.WJmO5 = 'K'; label.temp.WJmO5 = 'temperature';
 
 cd Sebastes_fasciatus
