@@ -14,7 +14,7 @@ estim_options('method', 'no');
 estim_pars;
 
 % prt_elas([],1)
-%  prt_report_AmPtox 
+ prt_report_AmPtox 
 
 % DO NOT DELETE the code here below: 
 % it is needed for initializing pars init from scratch
