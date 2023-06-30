@@ -1,5 +1,5 @@
 function [par, metaPar, txtPar] = pars_init_Sebastes_fasciatus_individual(metaData)
-global n_ind
+
 metaPar.model = 'nat'; 
 
 %% reference parameter (not to be changed) 
@@ -7,7 +7,7 @@ par.T_ref = 293.15;   free.T_ref = 0;   units.T_ref = 'K';        label.T_ref = 
 
 %% individual parameters
 par.z = 6.2479;       free.z     = 0;   units.z = '-';            label.z = 'zoom factor population'; 
-for i = 1:n_ind
+for i = 1:metaData.n_ind
     fldName = ['z',num2str(i)];
 par.(fldName) = 6.2479; free.(fldName)   = 1;   units.(fldName) = '-'; label.(fldName) = 'zoom factor for individual'; 
 end
@@ -32,7 +32,7 @@ par.s_G = 0.0001;     free.s_G   = 0;   units.s_G = '-';          label.s_G = 'G
 %% other parameters 
 par.del_M = 0.13422;  free.del_M = 1;   units.del_M = '-';        label.del_M = 'shape coefficient'; 
 par.f = 1;            free.f     = 0;   units.f = '-';            label.f = 'scaled functional response for 0-var data'; 
-par.f5 = 0.72742;    free.f5  = 1;   units.f5 = '-';          label.f5 = 'scaled functional response 10C'; 
+par.f5 = 0.72742;    free.f5  = 0;   units.f5 = '-';          label.f5 = 'scaled functional response 10C'; 
 % par.f2 = 1;           free.f2    = 0;   units.f2 = '-';           label.f2 = 'scaled functional response 2C'; 
 % par.f5 = 1;           free.f5    = 0;   units.f5 = '-';           label.f5 = 'scaled functional response 5C'; 
 % par.f7 = 1;           free.f7    = 0;   units.f7 = '-';           label.f7 = 'scaled functional response 7C'; 
