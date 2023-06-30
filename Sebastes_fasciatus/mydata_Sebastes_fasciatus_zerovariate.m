@@ -160,7 +160,7 @@ weights = setweights(data, []);
 weights.LW80 = 0.1 * weights.LW80;
 weights.LW15 = 0.1 * weights.LW15;
 weights.tW5 = 20 * weights.tW5;
-weights.tL5 = 10 * weights.tW5;
+weights.tL5 = 10 * weights.tL5;
 
 
 %% set pseudodata and respective weights
